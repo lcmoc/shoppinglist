@@ -1,5 +1,3 @@
-import "./style.css";
-
 import { useEffect, useState } from "react";
 
 import Trash from "../../assets/trash.png";
@@ -89,7 +87,7 @@ const ShoppingList = () => {
           {goods.map((good) => (
             <div
               key={good.id}
-              className="bg-white h-16 w-5/6 shadow-xl rounded m-2 flex"
+              className="bg-white h-16 w-5/6 shadow-xl rounded m-2 flex items-center justify-start"
             >
               <div className="bg-gray-500 h-16 w-5 mr-5">
                 {good.id === todoEditing ? (
@@ -104,8 +102,8 @@ const ShoppingList = () => {
                   ></button>
                 )}
               </div>
-              <div className="flex flex-row">
-                <div className="">
+              <div className="flex flex-row justify-between w-full">
+                <div className="flex flex-col justify-start items-start">
                   {good.id === todoEditing ? (
                     <>
                       <input
@@ -126,15 +124,15 @@ const ShoppingList = () => {
                     </>
                   )}
                 </div>
-                <div className="ml-32 flex flex-row justify-center items-center w-24">
+                <div className="flex flex-row justify-center items-center w-24">
                   <input
                     type="checkbox"
                     id="completed"
                     checked={good.completed}
                     onChange={() => toggleComplete(good.id)}
                   />
-                  <button onClick={() => deleteTodo(good.id)}>
-                    <img src={Trash} alt="trashcan"></img>
+                  <button onClick={() => deleteTodo(good.id)} className="ml-3">
+                    <img src={Trash} alt="trashcan" className="w-6"></img>
                   </button>
                 </div>
               </div>
