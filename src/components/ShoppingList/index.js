@@ -36,26 +36,26 @@ const ShoppingList = () => {
   }
 
   function deleteProduct(id) {
-    let updatedProducts = [...products].filter((good) => good.id !== id);
+    let updatedProducts = [...products].filter((product) => product.id !== id);
     setProducts(updatedProducts);
   }
 
   function toggleComplete(id) {
-    let updatedProducts = [...products].map((good) => {
-      if (good.id === id) {
-        good.completed = !good.completed;
+    let updatedProducts = [...products].map((product) => {
+      if (product.id === id) {
+        product.completed = !product.completed;
       }
-      return good;
+      return product;
     });
     setProducts(updatedProducts);
   }
 
   function submitEdits(id) {
-    const updatedProducts = [...products].map((good) => {
-      if (good.id === id) {
-        good.text = editingText;
+    const updatedProducts = [...products].map((product) => {
+      if (product.id === id) {
+        product.text = editingText;
       }
-      return good;
+      return product;
     });
     setProducts(updatedProducts);
     setProductEditing(null);
