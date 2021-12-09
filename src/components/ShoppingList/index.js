@@ -3,80 +3,70 @@ import { useEffect, useState } from "react";
 import Trash from "../../assets/trash.png";
 
 const ShoppingList = () => {
-  const [goods, setGoods] = useState([]);
-  const [good, setGood] = useState("");
-  const [todoEditing, setTodoEditing] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState("");
+  const [productEditing, setProductEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
 
   useEffect(() => {
-    const json = localStorage.getItem("goods");
-    const loadedTodos = JSON.parse(json);
-    if (loadedTodos) {
-      setGoods(loadedTodos);
+    const json = localStorage.getItem("products");
+    const loadedProducts = JSON.parse(json);
+    if (loadedProducts) {
+      setProducts(loadedProducts);
     }
   }, []);
 
   useEffect(() => {
-    const json = JSON.stringify(goods);
-    localStorage.setItem("goods", json);
-  }, [goods]);
+    const json = JSON.stringify(products);
+    localStorage.setItem("products", json);
+  }, [products]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    const newTodo = {
+    const newProduct = {
       id: new Date().getTime(),
-      text: good,
+      text: product,
       completed: false,
     };
-    setGoods([...goods].concat(newTodo));
-    setGood("");
+    setProducts([...products].concat(newProduct));
+    setProduct("");
   }
 
-  function deleteTodo(id) {
-    let updatedTodos = [...goods].filter((good) => good.id !== id);
-    setGoods(updatedTodos);
+  function deleteProduct(id) {
+    let updatedProducts = [...products].filter((good) => good.id !== id);
+    setProducts(updatedProducts);
   }
 
   function toggleComplete(id) {
-    let updatedTodos = [...goods].map((good) => {
+    let updatedProducts = [...products].map((good) => {
       if (good.id === id) {
         good.completed = !good.completed;
       }
       return good;
     });
-    setGoods(updatedTodos);
+    setProducts(updatedProducts);
   }
 
   function submitEdits(id) {
-    const updatedTodos = [...goods].map((good) => {
+    const updatedProducts = [...products].map((good) => {
       if (good.id === id) {
         good.text = editingText;
       }
       return good;
     });
-    setGoods(updatedTodos);
-    setTodoEditing(null);
+    setProducts(updatedProducts);
+    setProductEditing(null);
   }
 
   return (
     <div id="shopping-list">
       <div className="MainContainer">
         <div className="flex items-start justify-start flex-col bg-blue-400 w-96 mt-3 rounded">
-          <h1 className="text-white text-3xl p-text my-5 ml-5">
-            Einkaufsliste
-          </h1>
+          <h1 className="text-white text-3xl p-text my-5 ml-5">Einkaufsliste</h1>
           <form onSubmit={handleSubmit} className="my-5 ml-5">
-            <input
-              type="text"
-              onChange={(e) => setGood(e.target.value)}
-              value={good}
-              className="border border-black rounded"
-            />
-            <button
-              type="submit"
-              className="ml-5 border border-black rounded bg-blue-500 text-white text-base p-text px-2"
-            >
+            <input type="text" onChange={(e) => setProduct(e.target.value)} value={product} className="border border-black rounded" />
+            <button type="submit" className="ml-5 border border-black rounded bg-blue-500 text-white text-base p-text px-2">
               hinzufügen
             </button>
           </form>
@@ -90,27 +80,17 @@ const ShoppingList = () => {
               className="bg-white h-16 w-5/6 shadow-xl rounded m-2 flex items-center justify-start"
             >
               <div className="bg-gray-500 h-16 w-5 mr-5">
-                {good.id === todoEditing ? (
-                  <button
-                    onClick={() => submitEdits(good.id)}
-                    className="bg-gray-500 h-16 w-5 mr-5"
-                  ></button>
+                {good.id === productEditing ? (
+                  <button onClick={() => submitEdits(good.id)} className="bg-gray-500 h-16 w-5 mr-5"></button>
                 ) : (
-                  <button
-                    onClick={() => setTodoEditing(good.id)}
-                    className="bg-gray-500 h-16 w-5 mr-5"
-                  ></button>
+                  <button onClick={() => setProductEditing(good.id)} className="bg-gray-500 h-16 w-5 mr-5"></button>
                 )}
               </div>
               <div className="flex flex-row justify-between w-full">
                 <div className="flex flex-col justify-start items-start">
                   {good.id === todoEditing ? (
                     <>
-                      <input
-                        type="text"
-                        onChange={(e) => setEditingText(e.target.value)}
-                        className="border-b border-black rounded w-32"
-                      />
+                      <input type="text" onChange={(e) => setEditingText(e.target.value)} className="border-b border-black rounded w-32" />
                       <input
                         type="text"
                         // onChange={(e) => setEditingText(e.target.value)}
@@ -131,7 +111,7 @@ const ShoppingList = () => {
                     checked={good.completed}
                     onChange={() => toggleComplete(good.id)}
                   />
-                  <button onClick={() => deleteTodo(good.id)} className="ml-3">
+                  <button onClick={() => deleteProduct(good.id)} className="ml-3">
                     <img src={Trash} alt="trashcan" className="w-6"></img>
                   </button>
                 </div>
