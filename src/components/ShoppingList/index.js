@@ -2,12 +2,13 @@ import "./style.css";
 
 import { useEffect, useState } from "react";
 
+import Trash from "../../assets/trash.png";
+
 const ShoppingList = () => {
   const [goods, setGoods] = useState([]);
   const [good, setGood] = useState("");
   const [todoEditing, setTodoEditing] = useState(null);
   const [editingText, setEditingText] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     const json = localStorage.getItem("goods");
@@ -59,16 +60,6 @@ const ShoppingList = () => {
     setGoods(updatedTodos);
     setTodoEditing(null);
   }
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
   return (
     <div id="shopping-list">
@@ -100,23 +91,40 @@ const ShoppingList = () => {
               key={good.id}
               className="bg-white h-16 w-5/6 shadow-xl rounded m-2 flex"
             >
-              <div className="bg-gray-500 h-16 w-5"></div>
+              <div className="bg-gray-500 h-16 w-5 mr-5">
+                {good.id === todoEditing ? (
+                  <button
+                    onClick={() => submitEdits(good.id)}
+                    className="bg-gray-500 h-16 w-5 mr-5"
+                  ></button>
+                ) : (
+                  <button
+                    onClick={() => setTodoEditing(good.id)}
+                    className="bg-gray-500 h-16 w-5 mr-5"
+                  ></button>
+                )}
+              </div>
               <div className="flex flex-row">
-                <div className="ml-3">
+                <div className="">
                   {good.id === todoEditing ? (
-                    <input
-                      type="text"
-                      onChange={(e) => setEditingText(e.target.value)}
-                      className="border border-black rounded w-32"
-                    />
+                    <>
+                      <input
+                        type="text"
+                        onChange={(e) => setEditingText(e.target.value)}
+                        className="border-b border-black rounded w-32"
+                      />
+                      <input
+                        type="text"
+                        // onChange={(e) => setEditingText(e.target.value)}
+                        className="border border-black rounded w-32"
+                      />
+                    </>
                   ) : (
-                    <h2 className="text-lg mt-1">{good.text}</h2>
+                    <>
+                      <h2 className="text-lg mt-1">{good.text}</h2>
+                      <h2 className="text-lg mt-1">Menge:</h2>
+                    </>
                   )}
-                  <input
-                    type="text"
-                    placeholder="Menge"
-                    className="w-16 text-gray-500"
-                  />
                 </div>
                 <div className="ml-32 flex flex-row justify-center items-center w-24">
                   <input
@@ -125,18 +133,9 @@ const ShoppingList = () => {
                     checked={good.completed}
                     onChange={() => toggleComplete(good.id)}
                   />
-                  <div className="good-actions">
-                    {good.id === todoEditing ? (
-                      <button onClick={() => submitEdits(good.id)}>
-                        Submit Edits
-                      </button>
-                    ) : (
-                      <button onClick={() => setTodoEditing(good.id)}>
-                        Edit
-                      </button>
-                    )}
-                    <button onClick={() => deleteTodo(good.id)}>Delete</button>
-                  </div>
+                  <button onClick={() => deleteTodo(good.id)}>
+                    <img src={Trash} alt="trashcan"></img>
+                  </button>
                 </div>
               </div>
             </div>
