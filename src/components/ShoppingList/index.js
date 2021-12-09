@@ -76,18 +76,18 @@ const ShoppingList = () => {
       </div>
       <div className="flex items-center justify-center">
         <div className="flex items-center justify-start flex-col bg-gray-200 w-96 h-96">
-          {products.map((good) => (
-            <div key={good.id} className="bg-white h-16 w-5/6 shadow-xl rounded m-2 flex">
+          {products.map((product) => (
+            <div key={product.id} className="bg-white h-16 w-5/6 shadow-xl rounded m-2 flex">
               <div className="bg-gray-500 h-16 w-5 mr-5">
-                {good.id === productEditing ? (
-                  <button onClick={() => submitEdits(good.id)} className="bg-gray-500 h-16 w-5 mr-5"></button>
+                {product.id === productEditing ? (
+                  <button onClick={() => submitEdits(product.id)} className="bg-gray-500 h-16 w-5 mr-5"></button>
                 ) : (
-                  <button onClick={() => setProductEditing(good.id)} className="bg-gray-500 h-16 w-5 mr-5"></button>
+                  <button onClick={() => setProductEditing(product.id)} className="bg-gray-500 h-16 w-5 mr-5"></button>
                 )}
               </div>
               <div className="flex flex-row">
                 <div className="">
-                  {good.id === productEditing ? (
+                  {product.id === productEditing ? (
                     <>
                       <input type="text" onChange={(e) => setEditingText(e.target.value)} className="border-b border-black rounded w-32" />
                       <input
@@ -98,14 +98,14 @@ const ShoppingList = () => {
                     </>
                   ) : (
                     <>
-                      <h2 className="text-lg mt-1">{good.text}</h2>
+                      <h2 className="text-lg mt-1">{product.text}</h2>
                       <h2 className="text-lg mt-1">Menge:</h2>
                     </>
                   )}
                 </div>
                 <div className="ml-32 flex flex-row justify-center items-center w-24">
-                  <input type="checkbox" id="completed" checked={good.completed} onChange={() => toggleComplete(good.id)} />
-                  <button onClick={() => deleteProduct(good.id)}>
+                  <input type="checkbox" id="completed" checked={product.completed} onChange={() => toggleComplete(product.id)} />
+                  <button onClick={() => deleteProduct(product.id)}>
                     <img src={Trash} alt="trashcan"></img>
                   </button>
                 </div>
